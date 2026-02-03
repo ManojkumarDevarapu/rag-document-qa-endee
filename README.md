@@ -38,7 +38,7 @@ Performs similarity-based retrieval
 
 Uses RAG to generate accurate answers
 
-Example questions:
+Example Questions
 
 What technical skills are mentioned?
 
@@ -69,7 +69,7 @@ Text is split into overlapping chunks to preserve semantic meaning
 
 2. Embedding Generation
 
-Each chunk is converted into a dense vector using
+Each chunk is converted into a dense vector using:
 sentence-transformers/all-MiniLM-L6-v2
 
 3. Vector Database Layer (Endee)
