@@ -1,132 +1,103 @@
-RAG-Based Document Question Answering using Endee Vector Database
-Overview
+# RAG-Based Document Question Answering using Endee Vector Database
 
-In many real-world scenarios—placements, hiring, HR operations, compliance, or internal knowledge bases—important information is buried inside long documents such as resumes, job descriptions, policies, or manuals.
-Finding answers manually is slow and inefficient.
+## Overview
 
-This project builds a Retrieval Augmented Generation (RAG) system that allows users to ask natural-language questions over documents and get accurate, context-grounded answers.
+In many real-world scenarios—placements, hiring, HR operations, compliance, or internal knowledge bases—important information is buried inside long documents such as resumes, job descriptions, policies, or manuals. Finding answers manually is slow and inefficient.
 
-The system is designed around semantic search using vector embeddings, with Endee integrated as the vector database service.
+This project builds a **Retrieval Augmented Generation (RAG)** system that allows users to ask natural-language questions over documents and get accurate, context-grounded answers. The system is designed around semantic search using vector embeddings, with **Endee** integrated as the vector database service.
 
-Problem Statement
+## Problem Statement
 
 Traditional keyword-based search struggles because:
 
-Users ask questions differently than the document wording
-
-Documents are long and unstructured
-
-Relevant information is spread across multiple sections
+- Users ask questions differently than the document wording
+- Documents are long and unstructured
+- Relevant information is spread across multiple sections
 
 The goal of this project is to design and implement an AI system that:
 
-Understands the meaning of a question
+1. Understands the meaning of a question
+2. Retrieves the most relevant document content semantically
+3. Generates answers strictly grounded in the source documents
 
-Retrieves the most relevant document content semantically
+## What This Project Does
 
-Generates answers strictly grounded in the source documents
+- Accepts PDF documents (resumes, JDs, etc.)
+- Splits documents into meaningful semantic chunks
+- Converts chunks into vector embeddings
+- Performs similarity-based retrieval
+- Uses RAG to generate accurate answers
 
-What This Project Does
+### Example Questions
 
-Accepts PDF documents (resumes, JDs, etc.)
+- What technical skills are mentioned?
+- What is the education background?
+- What projects are listed?
+- What is the company name?
 
-Splits documents into meaningful semantic chunks
+## AI / ML Concepts Demonstrated
 
-Converts chunks into vector embeddings
+- **Retrieval Augmented Generation (RAG)**
+- **Semantic Search** using vector embeddings
+- **Cosine similarity**–based retrieval
+- **Context-grounded Question Answering**
+- **Chunking strategies** for long documents
 
-Performs similarity-based retrieval
+## System Design & Technical Approach
 
-Uses RAG to generate accurate answers
+### 1. Document Ingestion
 
-Example Questions
+- PDF documents are loaded and converted to text
+- Text is split into overlapping chunks to preserve semantic meaning
 
-What technical skills are mentioned?
+### 2. Embedding Generation
 
-What is the education background?
+- Each chunk is converted into a dense vector using:  
+  `sentence-transformers/all-MiniLM-L6-v2`
 
-What projects are listed?
+### 3. Vector Database Layer (Endee)
 
-What is the company name?
+- Endee is deployed as a vector database service using Docker
+- REST APIs are used to integrate vector search functionality
+- Vector search is performed based on semantic similarity
 
-AI / ML Concepts Demonstrated
+### 4. Retrieval Augmented Generation
 
-Retrieval Augmented Generation (RAG)
+- Top-K relevant chunks are retrieved
+- Retrieved context is passed to a Question Answering model
+- Final answers are generated only from retrieved context (no hallucination)
 
-Semantic Search using vector embeddings
+## How Endee Is Used in This Project
 
-Cosine similarity–based retrieval
+- Endee runs as the vector database service
+- The application integrates with Endee via REST APIs
+- Vector search and index management flows are designed around Endee’s API model
 
-Context-grounded Question Answering
-
-Chunking strategies for long documents
-
-System Design & Technical Approach
-1. Document Ingestion
-
-PDF documents are loaded and converted to text
-
-Text is split into overlapping chunks to preserve semantic meaning
-
-2. Embedding Generation
-
-Each chunk is converted into a dense vector using:
-sentence-transformers/all-MiniLM-L6-v2
-
-3. Vector Database Layer (Endee)
-
-Endee is deployed as a vector database service using Docker
-
-REST APIs are used to integrate vector search functionality
-
-Vector search is performed based on semantic similarity
-
-4. Retrieval Augmented Generation
-
-Top-K relevant chunks are retrieved
-
-Retrieved context is passed to a Question Answering model
-
-Final answers are generated only from retrieved context (no hallucination)
-
-How Endee Is Used in This Project
-
-Endee runs as the vector database service
-
-The application integrates with Endee via REST APIs
-
-Vector search and index management flows are designed around Endee’s API model
-
-Important Engineering Note
+## Important Engineering Note
 
 While working with the open-source Docker build of Endee, it was observed that:
 
-Vector search/read APIs are exposed
-
-Vector write operations are restricted in the OSS image
-
-The ingestion pipeline is fully implemented, and this limitation is clearly documented.
+- Vector search/read APIs are exposed
+- Vector write operations are restricted in the OSS image
+- The ingestion pipeline is fully implemented, and this limitation is clearly documented
 
 To ensure the RAG pipeline remains functional and demonstrable, a local fallback vector store is used for persistence, while Endee remains integrated as the vector database service.
 
-This design mirrors real-world engineering practice, where system constraints are handled gracefully rather than ignored.
+**This design mirrors real-world engineering practice, where system constraints are handled gracefully rather than ignored.**
 
-Tech Stack
+## Tech Stack
 
-Language: Python
+- **Language:** Python
+- **Vector Database:** Endee
+- **Embedding Model:** Sentence Transformers (MiniLM)
+- **QA Model:** DistilBERT (SQuAD)
+- **PDF Parsing:** PyPDF
+- **Containerization:** Docker
+- **APIs:** REST
 
-Vector Database: Endee
+## Project Structure
 
-Embedding Model: Sentence Transformers (MiniLM)
-
-QA Model: DistilBERT (SQuAD)
-
-PDF Parsing: PyPDF
-
-Containerization: Docker
-
-APIs: REST
-
-Project Structure
+```
 RAG-Document-QA/
 │
 ├── data/
@@ -139,34 +110,46 @@ RAG-Document-QA/
 │
 ├── requirements.txt
 ├── README.md
+```
 
-Setup & Execution
-1. Clone the Repository
+## Setup & Execution
+
+### 1. Clone the Repository
+```
 git clone <repository-url>
 cd RAG-Document-QA
+```
 
-2. Start Endee (Docker)
+### 2. Start Endee (Docker)
+```
 docker pull endeeio/endee-server:latest
 docker run -d -p 8080:8080 -v endee-data:/data --name endee-server endeeio/endee-server:latest
+```
 
-3. Create Virtual Environment & Install Dependencies
+### 3. Create Virtual Environment & Install Dependencies
+```
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-4. Add Documents
+### 4. Add Documents
 
 Place PDF files inside:
-
+```
 data/documents/
+```
 
-5. Run the RAG Application
+### 5. Run the RAG Application
+```
 python src/rag.py
-
+```
 
 Ask questions directly in the terminal.
 
-Example Output
+## Example Output
+
+```
 > What is the education background?
 Bachelor of Technology in Computer Science
 
@@ -175,29 +158,24 @@ VS Code Projects Resume Screening System
 
 > What is the company name?
 NovaTech Solutions
+```
 
-Limitations & Future Improvements
+## Limitations & Future Improvements
 
-Add OCR support for scanned/image-based PDFs
+- Add OCR support for scanned/image-based PDFs
+- Enable full vector persistence with a production Endee build
+- Web UI for document upload and chat interface
+- Multi-document filtering and metadata-based retrieval
 
-Enable full vector persistence with a production Endee build
-
-Web UI for document upload and chat interface
-
-Multi-document filtering and metadata-based retrieval
-
-Why This Project Matters
+## Why This Project Matters
 
 This project demonstrates not just AI model usage, but real-world system design:
 
-Understanding of RAG beyond simple demos
+- Understanding of RAG beyond simple demos
+- Practical vector search integration
+- Honest handling of infrastructure constraints
+- Clean, explainable architecture
 
-Practical vector search integration
-
-Honest handling of infrastructure constraints
-
-Clean, explainable architecture
-
-Final Note
+## Final Note
 
 This project reflects how AI systems are built in practice — with trade-offs, constraints, and engineering decisions — not just idealized demos.
