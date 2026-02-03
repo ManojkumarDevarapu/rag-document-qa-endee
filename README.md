@@ -61,18 +61,18 @@ Context-grounded Question Answering
 Chunking strategies for long documents
 
 System Design & Technical Approach
-1️.Document Ingestion
+1. Document Ingestion
 
 PDF documents are loaded and converted to text
 
 Text is split into overlapping chunks to preserve semantic meaning
 
-2️.Embedding Generation
+2. Embedding Generation
 
 Each chunk is converted into a dense vector using
 sentence-transformers/all-MiniLM-L6-v2
 
-3️.Vector Database Layer (Endee)
+3. Vector Database Layer (Endee)
 
 Endee is deployed as a vector database service using Docker
 
@@ -80,7 +80,7 @@ REST APIs are used to integrate vector search functionality
 
 Vector search is performed based on semantic similarity
 
-4️.Retrieval Augmented Generation
+4. Retrieval Augmented Generation
 
 Top-K relevant chunks are retrieved
 
@@ -141,26 +141,26 @@ RAG-Document-QA/
 ├── README.md
 
 Setup & Execution
-1️.Clone the Repository
+1. Clone the Repository
 git clone <repository-url>
 cd RAG-Document-QA
 
-2️.Start Endee (Docker)
+2. Start Endee (Docker)
 docker pull endeeio/endee-server:latest
 docker run -d -p 8080:8080 -v endee-data:/data --name endee-server endeeio/endee-server:latest
 
-3️.Create Virtual Environment & Install Dependencies
+3. Create Virtual Environment & Install Dependencies
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 
-4️.Add Documents
+4. Add Documents
 
 Place PDF files inside:
 
 data/documents/
 
-5.Run the RAG Application
+5. Run the RAG Application
 python src/rag.py
 
 
