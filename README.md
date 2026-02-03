@@ -2,13 +2,13 @@
 
 ## Overview
 
-In many real-world scenarios—placements, hiring, HR operations, compliance, or internal knowledge bases—important information is buried inside long documents such as resumes, job descriptions, policies, or manuals. Finding answers manually is slow and inefficient.
+In many real world scenarios—placements, hiring, HR operations, compliance, or internal knowledge bases—important information is buried inside long documents such as resumes, job descriptions, policies, or manuals. Finding answers manually is slow and inefficient.
 
 This project builds a **Retrieval Augmented Generation (RAG)** system that allows users to ask natural-language questions over documents and get accurate, context-grounded answers. The system is designed around semantic search using vector embeddings, with **Endee** integrated as the vector database service.
 
 ## Problem Statement
 
-Traditional keyword-based search struggles because:
+Traditional keyword based search struggles because:
 
 - Users ask questions differently than the document wording
 - Documents are long and unstructured
@@ -25,7 +25,7 @@ The goal of this project is to design and implement an AI system that:
 - Accepts PDF documents (resumes, JDs, etc.)
 - Splits documents into meaningful semantic chunks
 - Converts chunks into vector embeddings
-- Performs similarity-based retrieval
+- Performs similarity based retrieval
 - Uses RAG to generate accurate answers
 
 ### Example Questions
@@ -75,7 +75,7 @@ The goal of this project is to design and implement an AI system that:
 
 ## Important Engineering Note
 
-While working with the open-source Docker build of Endee, it was observed that:
+While working with the open source Docker build of Endee, it was observed that:
 
 - Vector search/read APIs are exposed
 - Vector write operations are restricted in the OSS image
@@ -83,7 +83,7 @@ While working with the open-source Docker build of Endee, it was observed that:
 
 To ensure the RAG pipeline remains functional and demonstrable, a local fallback vector store is used for persistence, while Endee remains integrated as the vector database service.
 
-**This design mirrors real-world engineering practice, where system constraints are handled gracefully rather than ignored.**
+**This design mirrors real world engineering practice, where system constraints are handled gracefully rather than ignored.**
 
 ## Tech Stack
 
@@ -165,7 +165,7 @@ NovaTech Solutions
 - Add OCR support for scanned/image-based PDFs
 - Enable full vector persistence with a production Endee build
 - Web UI for document upload and chat interface
-- Multi-document filtering and metadata-based retrieval
+- Multi document filtering and metadata-based retrieval
 
 ## Why This Project Matters
 
@@ -178,4 +178,4 @@ This project demonstrates not just AI model usage, but real-world system design:
 
 ## Final Note
 
-This project reflects how AI systems are built in practice — with trade-offs, constraints, and engineering decisions — not just idealized demos.
+This project reflects how AI systems are built in practice with trade offs, constraints, and engineering decisions not just idealized demos.
