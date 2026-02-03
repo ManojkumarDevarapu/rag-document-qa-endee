@@ -1,0 +1,7 @@
+sentence-transformers
+transformers
+torch
+pypdf
+requests
+numpy
+endee
